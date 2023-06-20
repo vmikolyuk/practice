@@ -13,20 +13,35 @@ import ru.naumen.practice.entities.Category;
 import ru.naumen.practice.entities.Product;
 import ru.naumen.practice.repositories.CategoryRepository;
 import ru.naumen.practice.repositories.ProductRepository;
+import ru.naumen.practice.repositories.StudentRepository;
 
 /**
  * Тесты наполнения данными
+ *
  * @author vmikolyuk
  * @since 23.06.2021
  */
 @SpringBootTest
 public class FillingTests
 {
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private static double getRandomDouble()
+    {
+        return 10 + (100 - 10) * new Random().nextDouble();
+    }
+
+    private static int getRandomInt()
+    {
+        return new Random().nextInt(5 - 3) + 5;
+    }
 
     @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private RepositoryExample repositoryExample;
 
     @Test
     void createCategories()
@@ -76,6 +91,12 @@ public class FillingTests
 
     }
 
+    @Test
+    void test()
+    {
+        repositoryExample.main(new String[] {});
+    }
+
     private Long createAndSaveCategory(String name, Long parentId)
     {
         Category category = new Category();
@@ -99,16 +120,6 @@ public class FillingTests
         Category category = new Category();
         category.setName(name);
         return categoryRepository.findOne(Example.of(category)).orElse(null);
-    }
-
-    private static int getRandomInt()
-    {
-        return new Random().nextInt(5 - 3) + 5;
-    }
-
-    private static double getRandomDouble()
-    {
-        return 10 + (100 - 10) * new Random().nextDouble();
     }
 
 }
