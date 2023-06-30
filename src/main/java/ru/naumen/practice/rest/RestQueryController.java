@@ -3,13 +3,13 @@ package ru.naumen.practice.rest;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javassist.NotFoundException;
 import ru.naumen.practice.entities.Category;
 import ru.naumen.practice.entities.Client;
 import ru.naumen.practice.entities.ClientOrder;
@@ -28,8 +28,6 @@ import ru.naumen.practice.repositories.ProductRepository;
 @RestController
 public class RestQueryController
 {
-    private static final String NOT_FOUND = "Not found!";
-
     private final EntitiesServiceImpl entitiesService;
     private final ClientRepository clientRepository;
     private final OrderRepository orderRepository;
@@ -56,7 +54,7 @@ public class RestQueryController
     @RequestMapping(value = "/rest/client", params = { "id" })
     public Client getClientById(@RequestParam Long id) throws NotFoundException
     {
-        return clientRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
+        return clientRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @RequestMapping(value = "/rest/client", params = { "name" })
@@ -64,7 +62,7 @@ public class RestQueryController
     {
         Client client = new Client();
         client.setFullName(name);
-        return clientRepository.findOne(Example.of(client)).orElseThrow(() -> new NotFoundException(NOT_FOUND));
+        return clientRepository.findOne(Example.of(client)).orElseThrow(NotFoundException::new);
     }
 
     @GetMapping("/rest/orders")
@@ -76,7 +74,7 @@ public class RestQueryController
     @RequestMapping(value = "/rest/order", params = { "id" })
     public ClientOrder getOrderById(@RequestParam Long id) throws NotFoundException
     {
-        return orderRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
+        return orderRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @RequestMapping(value = "/rest/order", params = { "status" })
@@ -96,7 +94,7 @@ public class RestQueryController
     @RequestMapping(value = "/rest/product", params = { "id" })
     public Product getProductById(@RequestParam Long id) throws NotFoundException
     {
-        return productRepository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
+        return productRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @RequestMapping(value = "/rest/product", params = { "name" })
@@ -104,7 +102,7 @@ public class RestQueryController
     {
         Product product = new Product();
         product.setName(name);
-        return productRepository.findOne(Example.of(product)).orElseThrow(() -> new NotFoundException(NOT_FOUND));
+        return productRepository.findOne(Example.of(product)).orElseThrow(NotFoundException::new);
     }
 
     @RequestMapping(value = "/rest/product", params = { "categoryId" })
@@ -112,7 +110,7 @@ public class RestQueryController
     {
         return categoryRepository.findById(categoryId)
                 .map(entitiesService::getCategoryProducts)
-                .orElseThrow(() -> new NotFoundException(NOT_FOUND));
+                .orElseThrow(NotFoundException::new);
     }
 
     @GetMapping("/rest/categories")
@@ -126,7 +124,7 @@ public class RestQueryController
     {
         return clientRepository.findById(clientId)
                 .map(entitiesService::getClientOrders)
-                .orElseThrow(() -> new NotFoundException(NOT_FOUND));
+                .orElseThrow(NotFoundException::new);
     }
 
     @RequestMapping(value = "/rest/clientProducts", params = { "clientId" })
