@@ -1,10 +1,10 @@
 package ru.naumen.practice.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 /**
  * Сущность "Клиент"
@@ -26,6 +26,9 @@ public class Client
 
     @Column
     private String address;
+
+    @Column(nullable = false)
+    private String phoneNumber;
 
     public String getAddress()
     {
@@ -65,5 +68,15 @@ public class Client
     public void setFullName(String fullName)
     {
         this.fullName = fullName;
+    }
+
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
     }
 }

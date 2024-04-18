@@ -1,10 +1,11 @@
 package ru.naumen.practice.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 /**
  * Сущность "Категория"
@@ -21,8 +22,8 @@ public class Category
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
-    private Long parentId;
+    @ManyToOne
+    private Category parent;
 
     public Long getId()
     {
@@ -44,13 +45,13 @@ public class Category
         this.name = name;
     }
 
-    public Long getParentId()
+    public Category getParent()
     {
-        return parentId;
+        return parent;
     }
 
-    public void setParentId(Long parentId)
+    public void setParent(Category parent)
     {
-        this.parentId = parentId;
+        this.parent = parent;
     }
 }

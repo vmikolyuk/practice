@@ -18,8 +18,7 @@ import ru.naumen.practice.entities.Product;
 @RepositoryRestResource(collectionResourceRel = "clients", path = "clients")
 public interface ClientRepository extends JpaRepository<Client, Long>
 {
-    String GET_ALL_PRODUCT_QUERY = "from Product where id in (from OrderProduct where clientOrder.client.id = "
-            + ":clientId) ";
+    String GET_ALL_PRODUCT_QUERY = "from Product";
 
     @Query(GET_ALL_PRODUCT_QUERY)
     List<Product> getAllProduct(@Param("clientId") Long clientId);

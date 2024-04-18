@@ -1,20 +1,10 @@
 package ru.naumen.practice.telegram;
 
-import static ru.naumen.practice.Constants.ALL_NAVIGATION_BUTTONS;
-import static ru.naumen.practice.Constants.Answers;
-import static ru.naumen.practice.Constants.CategoryNames;
-import static ru.naumen.practice.Constants.InlineCommand;
-import static ru.naumen.practice.Constants.Messages;
-import static ru.naumen.practice.Constants.NavigationButtons;
-import static ru.naumen.practice.Constants.OrderStatuses;
-import static ru.naumen.practice.Constants.Patterns;
-import static ru.naumen.practice.Constants.Separators;
+import static ru.naumen.practice.Constants.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
@@ -23,6 +13,7 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 
+import jakarta.annotation.PostConstruct;
 import ru.naumen.practice.entities.Category;
 import ru.naumen.practice.entities.Client;
 import ru.naumen.practice.entities.ClientOrder;
@@ -78,8 +69,9 @@ public class TelegramBotConnectionImpl implements TelegramBotConnection
             Category category = entitiesService.getCategoryByName(categoryName);
             if (category != null)
             {
-                sendMessage(teleramBotMessageFactory.createMenuItem(chatId, category.getParentId(), Messages.SUB_MENU,
-                        true, true));
+                sendMessage(
+                        teleramBotMessageFactory.createMenuItem(chatId, category.getParent().getId(), Messages.SUB_MENU,
+                                true, true));
             }
             else
             {

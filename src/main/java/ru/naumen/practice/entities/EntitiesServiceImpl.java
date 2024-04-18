@@ -114,7 +114,12 @@ public class EntitiesServiceImpl
 
     public List<Product> getClientProducts(Long clientId)
     {
-        return clientRepository.getAllProduct(clientId);
+        return orderProductRepository.findAll()
+                .stream()
+                .filter(orderProduct -> clientId.equals(orderProduct.getClientOrder().getClient().getId()))
+                .map(OrderProduct::getProduct)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     public List<Product> getTopPopularProducts(Integer limit)
@@ -130,7 +135,7 @@ public class EntitiesServiceImpl
     public List<Category> getCategoriesByParentId(Long parentId)
     {
         Category categoryExample = new Category();
-        categoryExample.setParentId(parentId);
+        categoryExample.setParent(categoryRepository.getReferenceById(parentId));
         return categoryRepository.findAll(Example.of(categoryExample));
     }
 
@@ -144,7 +149,7 @@ public class EntitiesServiceImpl
     public boolean isFinalCategory(Category category)
     {
         Category categoryForFind = new Category();
-        categoryForFind.setParentId(category.getId());
+        categoryForFind.setParent(category);
         return categoryRepository.findAll(Example.of(categoryForFind)).isEmpty();
     }
 
@@ -166,5 +171,13 @@ public class EntitiesServiceImpl
         ClientOrder clientOrder = new ClientOrder();
         clientOrder.setClient(client);
         return orderRepository.findAll(Example.of(clientOrder));
+    }
+
+    public List<Product> findProductsByName(String name)
+    {
+        return productRepository.findAll()
+                .stream()
+                .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toList());
     }
 }

@@ -10,7 +10,7 @@ import ru.naumen.practice.entities.ClientOrder;
  * @author vmikolyuk
  * @since 23.06.2021
  */
-@RepositoryRestResource(collectionResourceRel = "orders", path = "orders")
+@RepositoryRestResource(collectionResourceRel = "clientOrders", path = "clientOrders")
 public interface OrderRepository extends JpaRepository<ClientOrder, Long>
 {
 }

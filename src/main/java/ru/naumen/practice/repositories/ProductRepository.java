@@ -21,4 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>
 
     @Query(GET_TOP_POPULAR_QUERY)
     List<Product> getTopPopular();
+
+    List<Product> findByCategoryId(Long id);
 }

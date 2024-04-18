@@ -101,7 +101,7 @@ public class FillingTests
     {
         Category category = new Category();
         category.setName(name);
-        category.setParentId(parentId);
+        category.setParent(categoryRepository.getReferenceById(parentId));
         return categoryRepository.save(category).getId();
     }
 
