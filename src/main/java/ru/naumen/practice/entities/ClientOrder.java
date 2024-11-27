@@ -19,7 +19,7 @@ public class ClientOrder
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Client client;
 
     @Column(nullable = false)

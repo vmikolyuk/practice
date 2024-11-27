@@ -19,13 +19,13 @@ public class Product
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Category category;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 50)
     private String name;
 
-    @Column
+    @Column(length = 400)
     private String description;
 
     @Column(nullable = false)

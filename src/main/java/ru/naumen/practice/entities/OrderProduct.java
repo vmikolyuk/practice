@@ -19,10 +19,10 @@ public class OrderProduct
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private ClientOrder clientOrder;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Product product;
 
     @Column(nullable = false)

@@ -24,10 +24,10 @@ public class Client
     @Column(nullable = false)
     private String fullName;
 
-    @Column
+    @Column(length = 400)
     private String address;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 15)
     private String phoneNumber;
 
     public String getAddress()
